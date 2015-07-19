@@ -120,6 +120,18 @@ public class Map {
     	this.addPlayObject(food);
 	}
 	
+	public ArrayList<PlayObject> getFood() {
+		ArrayList<PlayObject> foodList = new ArrayList<PlayObject>();
+		
+		for (PlayObject playObject : playObjects) {
+			if(playObject.isEatable()) {
+				foodList.add(playObject);
+			}
+		}
+		
+		return foodList;
+	}
+	
 	public void addObstacles(int count) {
 		Random random = new Random();
 		int x;

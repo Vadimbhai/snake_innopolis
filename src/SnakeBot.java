@@ -9,14 +9,14 @@ import java.awt.Color;
  */
 
 public class SnakeBot extends Snake {
-	BotBrains brains;
+	StupidBrains brains;
 
 	public SnakeBot(Map map, int x, int y, int length) {
 		super(map, x, y, length);
 		
 		setBodyColor(Color.MAGENTA);
 		
-		brains = new BotBrains(map, this);
+		brains = new EaterBrains(map, this);
 		brains.start();
 	}
 	

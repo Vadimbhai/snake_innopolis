@@ -33,4 +33,8 @@ public class PlayObject {
 		return tiles.get(0).isDeadful();
 	}
 	
+	public boolean isEatable() {
+		return tiles.get(0).isEatable();
+	}
+	
 }
