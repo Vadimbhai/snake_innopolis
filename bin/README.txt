@@ -1,0 +1,1 @@
+You can add additional rectangles using mouse (left click - add, right - delete) or [ and ] buttons.
