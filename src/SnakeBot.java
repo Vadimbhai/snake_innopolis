@@ -9,19 +9,35 @@ import java.awt.Color;
  */
 
 public class SnakeBot extends Snake {
+	public enum BrainType {STUPID, EATER, HUNTER};
+	
 	StupidBrains brains;
 
-	public SnakeBot(Map map, int x, int y, int length) {
+	public SnakeBot(World map, int x, int y, int length, BrainType brainType) {
 		super(map, x, y, length);
+
+		switch (brainType) {
+		case EATER:
+			setBodyColor(Color.CYAN);
+			brains = new EaterBrains(map, this);
+			break;
+			
+		case HUNTER:
+			setBodyColor(new Color(33, 0, 127));
+			brains = new HunterBrains(map, this);
+			break;
+
+		default:
+			setBodyColor(Color.MAGENTA);
+			brains = new StupidBrains(map, this);
+			break;
+		}
 		
-		setBodyColor(Color.MAGENTA);
-		
-		brains = new EaterBrains(map, this);
 		brains.start();
 	}
 	
-	public PlayObject getAheadObject() {
-		return super.getAneadObject();
+	public PlayObject aheadObject() {
+		return super.getAheadObject();
 	}
 	
 	@Override

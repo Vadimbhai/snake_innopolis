@@ -121,6 +121,10 @@ public class SimpleDraw extends JPanel implements Runnable {
 					content.draw.setMoveVector(-1, 0);
 				} else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
 					content.draw.setMoveVector(1, 0);
+				} else if (e.getKeyCode() == KeyEvent.VK_Z) {
+					content.draw.addEaterBot();
+				} else if (e.getKeyCode() == KeyEvent.VK_X) {
+					content.draw.addHunterBot();
 				} else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
 					System.exit(0);
 				}

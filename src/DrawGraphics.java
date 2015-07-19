@@ -1,4 +1,6 @@
 import java.awt.Graphics;
+import java.util.Random;
+
 
 /**
  * 
@@ -10,38 +12,46 @@ import java.awt.Graphics;
 
 public class DrawGraphics {
     private Snake snake;
-    private Map map;
+    private World world;
     private static int mapWidth = 30;
     private static int mapHeight = 30;
     
     
     /** Initializes this class for drawing. */
     public DrawGraphics() {
-    	map = new Map(mapWidth, mapHeight);
-    	snake = new Snake(map, 15, 15, 5);
-    	map.addPlayObject(snake);
+    	world = new World(mapWidth, mapHeight);
+    	snake = new Snake(world, 15, 15, 5);
+    	world.addPlayObject(snake);
     	
-    	SnakeBot snakeBot = new SnakeBot(map, 20, 20, 5);
-    	map.addPlayObject(snakeBot);
+    	addEaterBot();  	
+    	addHunterBot();
     	
-    	snakeBot = new SnakeBot(map, 25, 20, 5);
-    	map.addPlayObject(snakeBot);    	
-    	    	
-    	snakeBot = new SnakeBot(map, 10, 20, 5);
-    	map.addPlayObject(snakeBot);    	
+    	world.addFood();
     	
-    	map.addFood();
-    	
-    	map.addObstacles(5);
+    	world.addObstacles(5);
     }
     
     public void setMoveVector(int deltaX, int deltaY) {
     	snake.setMovementVector(deltaX, deltaY);
     }
+    
+    public void addEaterBot() {
+    	Random random = new Random();
+    	SnakeBot snakeBot = 
+    			new SnakeBot(world, random.nextInt(mapWidth), random.nextInt(mapHeight), 3, SnakeBot.BrainType.EATER);
+    	world.addPlayObject(snakeBot); 
+    }
+    
+    public void addHunterBot() {
+    	Random random = new Random();
+    	SnakeBot snakeBot = 
+    			new SnakeBot(world, random.nextInt(mapWidth), random.nextInt(mapHeight), 3, SnakeBot.BrainType.HUNTER);
+    	world.addPlayObject(snakeBot); 
+    }
 
     /** Draw the contents of the window on surface. Called 20 times per second. */
     public void draw(Graphics surface) {
-    	map.draw(surface);
+    	world.draw(surface);
     }
     
     

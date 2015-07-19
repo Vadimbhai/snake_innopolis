@@ -13,7 +13,7 @@ import java.awt.Graphics;
 public class Snake extends PlayObject {
 	private static int drawPerSecond = 20;
 	protected Color bodyColor = Color.ORANGE;
-	private Map world;
+	private World world;
 	private int deltaX;
 	private int deltaY;
 	private int length;
@@ -21,7 +21,7 @@ public class Snake extends PlayObject {
 	private int drawCounter;
 	
 	
-	public Snake(Map map, int x, int y, int length) {
+	public Snake(World map, int x, int y, int length) {
 		this.world = map;
 		this.deltaX = 1;
 		this.deltaY = 0;
@@ -60,7 +60,7 @@ public class Snake extends PlayObject {
 		addBodyTile(tiles.get(tiles.size() - 1).getX(), tiles.get(tiles.size() - 1).getY());
 	}
 	
-	protected PlayObject getAneadObject() {
+	protected PlayObject getAheadObject() {
 		int nextX = tiles.get(0).getX() + deltaX;
 		int nextY = tiles.get(0).getY() + deltaY;
 		
@@ -76,7 +76,7 @@ public class Snake extends PlayObject {
 			int nextX = tiles.get(0).getX() + deltaX;
 			int nextY = tiles.get(0).getY() + deltaY;
 			
-			PlayObject aheadObject = getAneadObject();
+			PlayObject aheadObject = getAheadObject();
 			if (aheadObject != null) {
 				if (aheadObject.getTiles().get(0).isEatable) {
 					increaseLength();
