@@ -1,3 +1,10 @@
+/**
+ * 
+ * @author Vadim Reutskiy
+ * Innopolis University
+ * Summer School 2015
+ *
+ */
 
 public class Obstacle extends PlayObject {
 	public Obstacle(int x, int y) {

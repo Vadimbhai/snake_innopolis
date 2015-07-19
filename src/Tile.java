@@ -17,10 +17,18 @@ public class Tile {
 	protected Color color;
 	
 	private int tileWidth = 20;
-
 	private int tileHeight = 20;
+
 	private int margin = 1;
 	
+	public int getMargin() {
+		return margin;
+	}
+
+	public void setMargin(int margin) {
+		this.margin = margin;
+	}
+
 	public Tile(int x, int y) {
 		this.x = x;
 		this.y = y;

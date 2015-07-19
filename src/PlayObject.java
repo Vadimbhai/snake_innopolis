@@ -1,6 +1,13 @@
 import java.awt.Graphics;
 import java.util.ArrayList;
 
+/**
+ * 
+ * @author Vadim Reutskiy
+ * Innopolis University
+ * Summer School 2015
+ *
+ */
 
 public class PlayObject {
 	protected ArrayList<Tile> tiles;

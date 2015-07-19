@@ -49,20 +49,20 @@ public class World {
 	private void checkOverboard() {
 		for (PlayObject playObject : playObjects) {
 			for (Tile tile : playObject.getTiles()) {
-				if(tile.getX() > mapWidth) {
+				if(tile.getX() > mapWidth - 1) {
 					tile.setX(0);
 				}
 				
 				if(tile.getX() < 0) {
-					tile.setX(mapWidth);
+					tile.setX(mapWidth - 1);
 				}
 				
-				if(tile.getY() > mapHeight) {
+				if(tile.getY() > mapHeight - 1) {
 					tile.setY(0);
 				}
 				
 				if(tile.getY() < 0) {
-					tile.setY(mapHeight);
+					tile.setY(mapHeight - 1);
 				}
 			}
 		}
@@ -79,34 +79,6 @@ public class World {
 		
 		return null;
 	}
-	
-
-//	private void checkBehavior() {
-//		boolean needFood = false;
-//		for (PlayObject playObject : playObjects) {
-//			if (playObject.getClass() == Snake.class) {
-//				ArrayList<PlayObject> objects = 
-//						getObjectByCoord(playObject.getTiles().get(0).getX(), playObject.getTiles().get(0).getY());
-//				
-//				
-//				for (Iterator<PlayObject> iterator = objects.iterator(); iterator.hasNext();) {
-//					PlayObject object = (PlayObject) iterator.next();
-//					if(object == playObject) {
-//						continue;
-//					} else if (object.getTiles().get(0).isEatable) {
-//						((Snake)playObject).increaseLength();
-//						iterator.remove();
-//						needFood = true;
-//					} else if (object.getTiles().get(0).isDeadful) {
-//						// GAME OVER
-//					}
-//				}
-//			}
-//		}
-//		if (needFood) {
-//			addFood();
-//		}
-//	}
 	
 	public void addFood() {
 		Random random = new Random();
@@ -170,7 +142,7 @@ public class World {
 		for (Iterator<PlayObject> iterator = playObjects.iterator(); iterator.hasNext();) {
 			PlayObject playObject = (PlayObject) iterator.next();
 			if (playObject.isJunk()) {
-				if (playObject.getTiles().get(0).isEatable) {
+				if (playObject.isEatable()) {
 					needFood = true;
 				} else if (playObject.getClass() == Snake.class) {
 					System.exit(0);

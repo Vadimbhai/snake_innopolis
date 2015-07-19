@@ -1,3 +1,10 @@
+/**
+ * 
+ * @author Vadim Reutskiy
+ * Innopolis University
+ * Summer School 2015
+ *
+ */
 
 public class Food extends PlayObject {
 	public Food(int x, int y) {

@@ -12,7 +12,8 @@ import java.awt.Graphics;
 
 public class Snake extends PlayObject {
 	private static int drawPerSecond = 20;
-	protected Color bodyColor = Color.ORANGE;
+	protected Color bodyColor;
+	protected Color headColor;
 	private World world;
 	private int deltaX;
 	private int deltaY;
@@ -28,7 +29,12 @@ public class Snake extends PlayObject {
 		this.speed = 3;
 		this.length = length;
 		
-		for (int i = 0; i < length; i++) {
+		bodyColor = new Color(255, 106 ,0);
+		headColor = new Color(255, 155 ,0);
+		
+		addHeadTile(x--, y);		
+		
+		for (int i = 0; i < length - 1; i++) {
 			addBodyTile(x--, y);
 		}
 	}
@@ -37,6 +43,14 @@ public class Snake extends PlayObject {
 		Tile tile = new Tile(x, y);
 		tile.setDeadful(true);
 		tile.setColor(bodyColor);
+		tiles.add(tile);
+	}
+	
+	private void addHeadTile(int x, int y) {
+		Tile tile = new Tile(x, y);
+		tile.setDeadful(true);
+		tile.setColor(bodyColor);
+		tile.setMargin(-1);
 		tiles.add(tile);
 	}
 	
@@ -78,10 +92,10 @@ public class Snake extends PlayObject {
 			
 			PlayObject aheadObject = getAheadObject();
 			if (aheadObject != null) {
-				if (aheadObject.getTiles().get(0).isEatable) {
+				if (aheadObject.isEatable()) {
 					increaseLength();
 					world.removePlayObject(aheadObject);
-				} else if (aheadObject.getTiles().get(0).isDeadful) {
+				} else if (aheadObject.isDeadful()) {
 					world.removePlayObject(this);
 				}
 			}
