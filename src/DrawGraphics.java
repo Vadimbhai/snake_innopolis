@@ -1,7 +1,6 @@
 import java.awt.Graphics;
 import java.util.Random;
 
-
 /**
  * 
  * @author Vadim Reutskiy
@@ -23,8 +22,9 @@ public class DrawGraphics {
     	snake = new Snake(world, 15, 15, 5);
     	world.addPlayObject(snake);
     	
-    	addEaterBot();  	
-    	addHunterBot();
+    	addBot(SnakeBot.BrainType.EATER);
+    	addBot(SnakeBot.BrainType.HUNTER);
+    	addBot(SnakeBot.BrainType.STUPID);
     	
     	world.addFood();
     	
@@ -35,18 +35,19 @@ public class DrawGraphics {
     	snake.setMovementVector(deltaX, deltaY);
     }
     
-    public void addEaterBot() {
+    private void addBot(SnakeBot.BrainType botBrainType) {
     	Random random = new Random();
     	SnakeBot snakeBot = 
-    			new SnakeBot(world, random.nextInt(mapWidth), random.nextInt(mapHeight), 3, SnakeBot.BrainType.EATER);
+    			new SnakeBot(world, random.nextInt(mapWidth), random.nextInt(mapHeight), 3, botBrainType);
     	world.addPlayObject(snakeBot); 
     }
     
+    public void addEaterBot() {
+    	addBot(SnakeBot.BrainType.EATER);
+    }
+    
     public void addHunterBot() {
-    	Random random = new Random();
-    	SnakeBot snakeBot = 
-    			new SnakeBot(world, random.nextInt(mapWidth), random.nextInt(mapHeight), 3, SnakeBot.BrainType.HUNTER);
-    	world.addPlayObject(snakeBot); 
+    	addBot(SnakeBot.BrainType.HUNTER);
     }
 
     /** Draw the contents of the window on surface. Called 20 times per second. */
