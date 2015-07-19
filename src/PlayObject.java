@@ -29,4 +29,8 @@ public class PlayObject {
 		return isJunk;
 	}
 	
+	public boolean isDeadful() {
+		return tiles.get(0).isDeadful();
+	}
+	
 }

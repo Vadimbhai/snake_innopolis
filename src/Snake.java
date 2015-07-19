@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Graphics;
 
 
@@ -9,14 +10,15 @@ import java.awt.Graphics;
  *
  */
 
-public class Snake extends PlayObject{
+public class Snake extends PlayObject {
+	private static int drawPerSecond = 20;
+	protected Color bodyColor = Color.ORANGE;
 	private Map world;
 	private int deltaX;
 	private int deltaY;
 	private int length;
-	private int speed;
+	protected int speed;
 	private int drawCounter;
-	private static int drawPerSecond = 20;
 	
 	
 	public Snake(Map map, int x, int y, int length) {
@@ -27,35 +29,54 @@ public class Snake extends PlayObject{
 		this.length = length;
 		
 		for (int i = 0; i < length; i++) {
-			Tile tile = new Tile(x--, y);
-			tile.setDeadful(true);
-			tiles.add(tile);
+			addBodyTile(x--, y);
 		}
 	}
 	
-	public void setMovementVector(int x, int y) {
-		if (x == -deltaX || y == -deltaY) {
-			return;
-		}
-		
-		if (world.getObjectByCoord(tiles.get(0).getX() + x, tiles.get(0).getY() + y) == this) {
-			return;
-		}
-		
-		deltaX = x;
-		deltaY = y;
+	private void addBodyTile(int x, int y) {
+		Tile tile = new Tile(x, y);
+		tile.setDeadful(true);
+		tile.setColor(bodyColor);
+		tiles.add(tile);
 	}
 	
-	private void move() {
+	public void decreaseLength() {
+		this.length--;
+		this.tiles.remove(this.tiles.size() - 1);
+	}
+	
+	@Override
+	public void draw(Graphics surface) {
+		move();
+		
+		super.draw(surface);
+	}
+	
+	public void increaseLength() {
+		this.length++;
+		
+		this.speed = length / 3;
+		
+		addBodyTile(tiles.get(tiles.size() - 1).getX(), tiles.get(tiles.size() - 1).getY());
+	}
+	
+	protected PlayObject getAneadObject() {
+		int nextX = tiles.get(0).getX() + deltaX;
+		int nextY = tiles.get(0).getY() + deltaY;
+		
+		PlayObject aheadObject = world.getObjectByCoord(nextX, nextY);
+		
+		return aheadObject;
+	}
+
+	protected void move() {
 		drawCounter++;
 		
-		if (drawCounter > (drawPerSecond - (3 * speed))) {
-			drawCounter = 0;
-			
+		if (isTimeToMove()) {
 			int nextX = tiles.get(0).getX() + deltaX;
 			int nextY = tiles.get(0).getY() + deltaY;
 			
-			PlayObject aheadObject = world.getObjectByCoord(nextX, nextY);
+			PlayObject aheadObject = getAneadObject();
 			if (aheadObject != null) {
 				if (aheadObject.getTiles().get(0).isEatable) {
 					increaseLength();
@@ -73,27 +94,36 @@ public class Snake extends PlayObject{
 			}
 		}
 	}
-	
-	@Override
-	public void draw(Graphics surface) {
-		move();
+
+	private boolean isTimeToMove() {
+		if (drawCounter > (drawPerSecond - (3 * speed))) {
+			drawCounter = 0;
+			return true;
+		}
 		
-		super.draw(surface);
+		return false;
 	}
 	
-	public void increaseLength() {
-		this.length++;
+	public void setMovementVector(int x, int y) {
+		if (x == -deltaX || y == -deltaY) {
+			return;
+		}
 		
-		this.speed = length / 3;
+		PlayObject aheadObject = (world.getObjectByCoord(tiles.get(0).getX() + x, tiles.get(0).getY() + y));
+		if (aheadObject != null &&
+				aheadObject.isDeadful()) {
+			return;
+		}
 		
-		Tile tile = new Tile(tiles.get(tiles.size() - 1).getX(), tiles.get(tiles.size() - 1).getY());
-		tile.setDeadful(true);
-		tiles.add(tile);
+		deltaX = x;
+		deltaY = y;
 	}
 	
-	public void decreaseLength() {
-		this.length--;
-		this.tiles.remove(this.tiles.size() - 1);
+	protected void setBodyColor(Color bodyColor) {
+		this.bodyColor = bodyColor;
+		for (Tile tile : tiles) {
+			tile.setColor(bodyColor);
+		}
 	}
 	
 }

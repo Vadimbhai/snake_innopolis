@@ -19,12 +19,20 @@ public class DrawGraphics {
     public DrawGraphics() {
     	map = new Map(mapWidth, mapHeight);
     	snake = new Snake(map, 15, 15, 5);
-    	
     	map.addPlayObject(snake);
+    	
+    	SnakeBot snakeBot = new SnakeBot(map, 20, 20, 15);
+    	map.addPlayObject(snakeBot);
+    	
+    	snakeBot = new SnakeBot(map, 25, 20, 15);
+    	map.addPlayObject(snakeBot);    	
+    	    	
+    	snakeBot = new SnakeBot(map, 10, 20, 15);
+    	map.addPlayObject(snakeBot);    	
     	
     	map.addFood();
     	
-    	map.addObstacles(20);
+    	map.addObstacles(5);
     }
     
     public void setMoveVector(int deltaX, int deltaY) {
